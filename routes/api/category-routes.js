@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('FINE ONE CATEGORY =>', err);
-      json.status(500).json(err);
+      res.status(500).json(err);
     });
   // be sure to include its associated Products
 });
@@ -39,7 +39,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new category, expecting id and category_name
   Category.create({
-    id: req.body.id,
     category_name: req.body.category_name,
   })
     .then((dbCategoryData) => {
@@ -47,7 +46,7 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       console.log('CREATE NEW CATEGORY =>', err);
-      json.status(500).json(err);
+      res.status(500).json(err);
     });
 });
 
@@ -67,7 +66,7 @@ router.put('/:id', (req, res) => {
     })
     .catch((err) => {
       console.log('UPDATE CATEGORY =>', err);
-      json.status(500).json(err);
+      res.status(500).json(err);
     });
 });
 
