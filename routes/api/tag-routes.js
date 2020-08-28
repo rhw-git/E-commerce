@@ -6,13 +6,21 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 router.get('/', (req, res) => {
   // find all tags
-  Tag.findAll()
+  Tag.findAll({
+    // be sure to include its associated Product data
+    attributes: ['id', 'tag_name'],
+    include: [
+      {
+        model: Product,
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      },
+    ],
+  })
     .then((dbTagData) => res.json(dbTagData))
     .catch((err) => {
       console.log('FIND ALL TAGS =>', err);
       res.status(500).json(err);
     });
-  // be sure to include its associated Product data
 });
 
 router.get('/:id', (req, res) => {
@@ -21,6 +29,14 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id,
     },
+    // be sure to include its associated Product data
+    attributes: ['id', 'tag_name'],
+    include: [
+      {
+        model: Product,
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      },
+    ],
   })
     .then((dbTagData) => {
       if (!dbTagData) {
@@ -33,7 +49,6 @@ router.get('/:id', (req, res) => {
       console.log('FINE ONE TAG =>', err);
       res.status(500).json(err);
     });
-  // be sure to include its associated Product data
 });
 
 router.post('/', (req, res) => {
