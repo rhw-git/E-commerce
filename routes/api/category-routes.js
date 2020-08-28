@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Category, Product } = require('../../models');
+const { Category, Product, ProductTag } = require('../../models');
 // const { json } = require('sequelize/types');
 
 // The `/api/categories` endpoint
@@ -85,24 +85,39 @@ router.put('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  // delete a category by its `id` value
-  Category.destroy({
+// router.delete('/:id', async(req, res) => {
+//   // delete a category by its `id` value
+//   Category.destroy({
+//     where: {
+//       id: req.params.id,
+//     },
+//   })
+//     .then((dbCategoryData) => {
+//       if (!dbCategoryData) {
+//         res.status(404).json({ message: 'No Category found with this id' });
+//         return;
+//       }
+//       res.json(dbCategoryData);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
+
+router.delete('/:id', async (req, res) => {
+  // delete one product by its `id` value
+  await ProductTag.destroy({
+    where: {
+      product_id: req.params.id,
+    },
+  });
+  const result = await Product.destroy({
     where: {
       id: req.params.id,
     },
-  })
-    .then((dbCategoryData) => {
-      if (!dbCategoryData) {
-        res.status(404).json({ message: 'No Category found with this id' });
-        return;
-      }
-      res.json(dbCategoryData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
+  });
+  return res.json(result);
 });
 
 module.exports = router;
