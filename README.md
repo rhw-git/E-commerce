@@ -18,7 +18,8 @@ MIT
 
 ## Use
 
-See video:(https://github.com/rhw-git/E-commerce/blob/master/video/ecinnerce_dbConnecting%20test%20with%20Insomnia.webm)
+See video:
+(https://github.com/rhw-git/E-commerce/blob/master/video/ecinnerce_dbConnecting%20test%20with%20Insomnia.webm)
 
 ## GitHub
 
